@@ -1,4 +1,4 @@
-This script was for a homework assignment from Washington University's Data Analytics Boot Camp (2019).
+*This script was for a homework assignment for Washington University's Data Analytics Boot Camp (2019).*
 
 ## Purchasing Total
 <img src="presentation/1.PNG" width="600">
