@@ -1,53 +1,22 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# ### Heroes Of Pymoli Data Analysis
-# * Items priced less than 3.00 dollars are significantly less likley to sell than more expensive items. The sellers might be excellent in estimating the value of their items or perhaps the game itself exploits psychological mechanics to entice players to spend more money. Interesting, nonetheless.
-# 
-# * The highest spenders (on average) are in the age range 35-39 with an average player spending 4.76 dollars, followed by players younger than 10 years old with players spending an average of 4.53 dollars. Perhaps there is a correlation between families with members in each group and average spending per family member.
-# 
-# * There are more purchases than members for each age group. The age range 20-24 has the highest purchase to player ratio with the total number of purchases being 141 per/100 of the player count. The second highest being players within the range 30-34 with 140 per/100. These two age groups might be the most susceptible to prior marketing and psychological techniques, or they have stronger relationships to the game.
-
-# In[1]:
-
-
 import pandas as pd
 import numpy as np
 
-file_to_load = "Resources/purchase_data.csv"
+file_to_load = "resources/purchase_data.csv"
 
 purchase_data = pd.read_csv(file_to_load)
 purchase_data.head()
 
 
-# ## Player Count
-
-# * Display the total number of players
-# 
-
-# In[2]:
-
+# Player Count
 
 player_count = purchase_data.SN.nunique()
 player_count
 
 
-# ## Purchasing Analysis (Total)
-
-# * Run basic calculations to obtain number of unique items, average price, etc.
-# 
-# 
-# * Create a summary data frame to hold the results
-# 
-# 
-# * Optional: give the displayed data cleaner formatting
-# 
-# 
-# * Display the summary data frame
-# 
-
-# In[3]:
-
+# Purchasing Analysis (Total)
 
 item_num = purchase_data["Item ID"].nunique()
 avg_price = purchase_data["Price"].mean()
@@ -60,21 +29,7 @@ summary = pd.DataFrame({"Number of Items":[item_num],
 summary
 
 
-# ## Gender Demographics
-
-# * Percentage and Count of Male Players
-# 
-# 
-# * Percentage and Count of Female Players
-# 
-# 
-# * Percentage and Count of Other / Non-Disclosed
-# 
-# 
-# 
-
-# In[4]:
-
+# Gender Demographics
 
 males = purchase_data[purchase_data['Gender'].isin(['Male'])]
 females = purchase_data[purchase_data['Gender'].isin(['Female'])]
@@ -97,25 +52,7 @@ gender_demo = gender_demo_raw.style.format({
 
 gender_demo
 
-
-# 
-# ## Purchasing Analysis (Gender)
-
-# * Run basic calculations to obtain purchase count, avg. purchase price, avg. purchase total per person etc. by gender
-# 
-# 
-# 
-# 
-# * Create a summary data frame to hold the results
-# 
-# 
-# * Optional: give the displayed data cleaner formatting
-# 
-# 
-# * Display the summary data frame
-
-# In[5]:
-
+# Purchasing Analysis (Gender)
 
 genders = ["Male","Female","Other / Non-Disclosed"]
 total_spent = [males["Price"].sum(), females["Price"].sum(), others["Price"].sum()]
@@ -130,27 +67,7 @@ gender_summary = pd.DataFrame({"Gender":genders,
 gender_summary
 
 
-# ## Age Demographics
-
-# * Establish bins for ages
-# 
-# 
-# * Categorize the existing players using the age bins. Hint: use pd.cut()
-# 
-# 
-# * Calculate the numbers and percentages by age group
-# 
-# 
-# * Create a summary data frame to hold the results
-# 
-# 
-# * Optional: round the percentage column to two decimal points
-# 
-# 
-# * Display Age Demographics Table
-# 
-
-# In[6]:
+# Age Demographics
 
 
 bins = [0,9,14,19,24,29,34,39,100]
@@ -169,23 +86,7 @@ age_group_pd = pd.DataFrame({"total":age,"per":age_per})
 age_group_pd
 
 
-# ## Purchasing Analysis (Age)
-
-# * Bin the purchase_data data frame by age
-# 
-# 
-# * Run basic calculations to obtain purchase count, avg. purchase price, avg. purchase total per person etc. in the table below
-# 
-# 
-# * Create a summary data frame to hold the results
-# 
-# 
-# * Optional: give the displayed data cleaner formatting
-# 
-# 
-# * Display the summary data frame
-
-# In[7]:
+# Purchasing Analysis (Age)
 
 
 purchase_data4 = purchase_data.copy(deep="True")
@@ -205,26 +106,7 @@ age_summary = pd.DataFrame({"Purchase Count":purchase_count2,
 age_summary
 
 
-# ## Top Spenders
-
-# * Run basic calculations to obtain the results in the table below
-# 
-# 
-# * Create a summary data frame to hold the results
-# 
-# 
-# * Sort the total purchase value column in descending order
-# 
-# 
-# * Optional: give the displayed data cleaner formatting
-# 
-# 
-# * Display a preview of the summary data frame
-# 
-# 
-
-# In[8]:
-
+# Top Spenders
 
 spenders = purchase_data.groupby("SN")
 
@@ -240,29 +122,7 @@ spenders_summary = pd.DataFrame({"Purchase Count":purchase_count,
 spenders_summary.sort_values(by="Total Purchase Value", ascending=False).head()
 
 
-# ## Most Popular Items
-
-# * Retrieve the Item ID, Item Name, and Item Price columns
-# 
-# 
-# * Group by Item ID and Item Name. Perform calculations to obtain purchase count, item price, and total purchase value
-# 
-# 
-# * Create a summary data frame to hold the results
-# 
-# 
-# * Sort the purchase count column in descending order
-# 
-# 
-# * Optional: give the displayed data cleaner formatting
-# 
-# 
-# * Display a preview of the summary data frame
-# 
-# 
-
-# In[9]:
-
+# Most Popular Items
 
 items_df = purchase_data[["Item ID","Item Name", "Price"]].copy()
 items = items_df.groupby(["Item ID","Item Name"])
@@ -278,20 +138,7 @@ items_df
 items_summary.sort_values(by="Purchase Count", ascending=False).head()
 
 
-# ## Most Profitable Items
-
-# * Sort the above table by total purchase value in descending order
-# 
-# 
-# * Optional: give the displayed data cleaner formatting
-# 
-# 
-# * Display a preview of the data frame
-# 
-# 
-
-# In[10]:
-
+# Most Profitable Items
 
 items_summary.sort_values(by="Total Purchase Value", ascending=False).head()
 
